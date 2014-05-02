@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the VIH Short Course Sport feature.
+ */
+
+include_once 'vih_short_course_sport.features.inc';
