@@ -1,0 +1,4 @@
+Title,SKU,Price,Stock status,Stock quantity,Room
+Sport course,SPORT-COURSE,4000.00,1,50,single
+Sport course sold out,SPORT-COURSE-SOLDOUT,4000.00,1,0,single
+Sport course expired,SPORT-COURSE-EXPIRED,4000.00,1,50,single

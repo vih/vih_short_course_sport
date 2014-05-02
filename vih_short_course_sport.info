@@ -47,3 +47,5 @@ features[field_instance][] = commerce_product-vih_short_course_sportcamp-commerc
 features[field_instance][] = commerce_product-vih_short_course_sportcamp-commerce_stock
 features[field_instance][] = commerce_product-vih_short_course_sportcamp-field_room
 features[node][] = vih_short_course_sport_camp
+
+files[] = vih_short_course_sport.migrate.inc
