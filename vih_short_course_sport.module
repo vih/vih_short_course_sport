@@ -4,6 +4,11 @@
  * Code for the VIH Short Course Sport feature.
  */
 
+// @todo: What is the proper field we should set this to?
+define('COMMERCE_CART_ADDITIONAL_PRODUCTS_FIELD', 'field_additional_products');
+
+// @todo: Map "extra choices"
+
 include_once 'vih_short_course_sport.features.inc';
 
 /**
@@ -20,4 +25,181 @@ function vih_short_course_sport_migrate_api() {
   );
 
   return $api;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Add our "Additional Product Data" field option to Commerce Cart's form settings.
+ */
+function vih_short_course_sport_form_field_ui_field_edit_form_alter(&$form, &$form_state) {
+  // Extract the instance info from the form.
+  $instance = $form['#instance'];
+
+  // If the current field instance is not locked and is attached to a product
+  // line item type...
+  if (empty($form['locked']) && $instance['entity_type'] == 'commerce_line_item' &&
+    in_array($instance['bundle'], commerce_product_line_item_types())) {
+
+    // Add our extra option to the existing options.
+    $form['instance']['commerce_cart_settings']['additional_products_field_access'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use this field as a modifier for Commerce Additional Products'),
+      '#default_value' => isset($instance['commerce_cart_settings']['additional_products_field_access']) ? $instance['commerce_cart_settings']['additional_products_field_access'] : FALSE,
+    );
+  }
+}
+
+/**
+ * Implementation of hook_form_FORMID_alter().
+ *
+ * Attaches the additional products and attributes to the Add to Cart form.
+ */
+function vih_short_course_sport_form_commerce_cart_add_to_cart_form_alter(&$form, &$form_state) {
+  // Initialize empty arrays we'll use later.
+  $attached_additional_products = array();
+  $attached_additional_attributes = array();
+
+  // Load the entity information of the product display
+  $entity_type = $form_state['context']['entity_type'];
+  $entity_id = $form_state['context']['entity_id'];
+
+  // Create entity wrapper of the product display
+  $product_display_entities = entity_load($entity_type, array($entity_id));
+  $product_display_wrapper = entity_metadata_wrapper($entity_type, reset($product_display_entities));
+
+  // Check if the product display is utilizing additional products.
+  if ($product_display_wrapper->__isset(COMMERCE_CART_ADDITIONAL_PRODUCTS_FIELD)) {
+    // Make sure we have values before moving forward
+    $additional_products = $product_display_wrapper->{COMMERCE_CART_ADDITIONAL_PRODUCTS_FIELD}->value();
+    if ($additional_products) {
+
+      // We only need to attach the product ID and titles for the form
+      foreach ($additional_products as $key => $commerce_product) {
+
+        // Get price for title.
+        $commerce_product_price = commerce_product_calculate_sell_price($commerce_product);
+        $price = ' (' . commerce_currency_format($commerce_product_price['amount'], $commerce_product_price['currency_code']) . ')';
+
+        // Allows us to create a radio list of options based by product ID
+        $attached_additional_products[$commerce_product->product_id] = $commerce_product->title . $price;
+
+        // Add the products atributes fields for later.
+        // @note: the field instance is saved in the form's line_item_fields,
+        //        do we technically need to reload field instance?
+        foreach (element_children($form['line_item_fields']) as $field_name) {
+
+          // Check if the field had the proper setting enabled for it to be added.
+          $allowed = vih_short_course_sport_field_access($form['line_item_fields'][$field_name]);
+          if ($allowed) {
+
+            // Add the field to the array of fields to be parsed
+            $attached_additional_attributes[$commerce_product->product_id][$field_name] = $form['line_item_fields'][$field_name];
+          }
+        }
+      }
+    }
+  }
+
+  // If we didn't end up with additional products to attach, lets leave now.
+  if (!$attached_additional_products) {
+    return;
+  }
+
+  // Create the options array for secondary products.
+  $options = array(
+    '_none' => 'None',
+  );
+  $options += $attached_additional_products;
+
+  // Start building form
+  $form['additional_products'] = array(
+    '#type' => 'container',
+    '#weight' => 50,
+  );
+  $form['additional_products']['additional_products_option'] = array(
+    '#type' => 'radios',
+    '#title' => t('Additional products'),
+    '#options' => $options,
+    '#default_value' => '_none',
+    '#weight'=> 30,
+  );
+  // Inject the product attributes.
+  foreach ($attached_additional_products as $product_id => $display_title) {
+    if (isset($attached_additional_attributes[$product_id])) {
+
+      // We make a container for each product's field options
+      // @note: This is unneeded since all products share line item type
+      //        but end goal is to support different attributes per product.
+      $form['additional_products'][$product_id] = array(
+        '#type' => 'container',
+        '#weight' => 40,
+        '#states' => array(
+          'visible' => array(
+            ':input[name=additional_products_option]' => array('value' => $product_id),
+          ),
+        ),
+      );
+      // Add each field to the container
+      foreach ($attached_additional_attributes[$product_id] as $field_name => $element) {
+        $form['additional_products'][$product_id][$field_name] = $element[LANGUAGE_NONE];
+      }
+    }
+  }
+
+  $form['#submit'][] = 'vih_short_course_sport_add_to_cart_form_submit';
+}
+
+/**
+ * Submit handler
+ * @todo : Provide proper translation on product options
+ * @todo : comment code
+ * @todo : clean this up.
+ */
+function vih_short_course_sport_add_to_cart_form_submit($form, &$form_state) {
+  // Check if additional products were added
+  if (isset($form_state['values']['additional_products_option']) && is_numeric($form_state['values']['additional_products_option'])) {
+    // Create new line item and add it to the cart.
+    if ($product = commerce_product_load((int) $form_state['values']['additional_products_option'])) {
+      // Create some details about the line itme
+      $line_item_quantity = $form_state['values']['quantity'];
+      $line_item_order_id = $form_state['line_item']->order_id;
+      $line_item_data = array();
+      $line_item_type = $form_state['line_item']->type;
+
+      // Generate & save line item object
+      $line_item = commerce_product_line_item_new($product, $line_item_quantity, $line_item_order_id, $line_item_data, $line_item_type);
+      commerce_line_item_save($line_item);
+
+      // Update the line item's fields appropriately with attribute form values
+      $attribute_fields = element_children($form['additional_products'][$product->product_id]);
+      foreach ($attribute_fields as $key => $field_name) {
+        $line_item_attribute_value = array(
+          LANGUAGE_NONE => array(
+            array(
+              'value' => $form_state['values'][$field_name][0]['value'],
+            ),
+          ),
+        );
+        $line_item->$field_name = $line_item_attribute_value;
+      }
+
+      $line_item = commerce_line_item_load($line_item->line_item_id);
+      // Add line item to cart, use uid saved in form state.
+      $line_item = commerce_cart_product_add($form_state['values']['uid'], $line_item, FALSE);
+    }
+  }
+}
+
+/**
+ * Helper function to check if line item field should be attached as a additional
+ * product attribute.
+ */
+function vih_short_course_sport_field_access($field) {
+  if (isset($field['#commerce_cart_settings']) && isset($field['#commerce_cart_settings']['additional_products_field_access'])) {
+    if ($field['#commerce_cart_settings']['additional_products_field_access']) {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
