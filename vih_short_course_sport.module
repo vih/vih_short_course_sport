@@ -4,9 +4,6 @@
  * Code for the VIH Short Course Sport feature.
  */
 
-// @todo: What is the proper field we should set this to?
-define('COMMERCE_CART_ADDITIONAL_PRODUCTS_FIELD', 'field_additional_products');
-
 // @todo: Map "extra choices"
 
 include_once 'vih_short_course_sport.features.inc';
@@ -48,6 +45,16 @@ function vih_short_course_sport_form_field_ui_field_edit_form_alter(&$form, &$fo
       '#default_value' => isset($instance['commerce_cart_settings']['additional_products_field_access']) ? $instance['commerce_cart_settings']['additional_products_field_access'] : FALSE,
     );
   }
+  // If the current field instance is not locked and is attached to  product
+  // display node...
+  if (empty($form['locked']) && $form['#field']['type'] == 'commerce_product_reference') {
+    $form['instance']['settings']['additional_products_provider'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use this field to provide additional products that can be optionally added with the course.'),
+      '#default_value' => isset($instance['settings']['additional_products_provider']) ? $instance['settings']['additional_products_provider'] : FALSE,
+      '#weight' => -8,
+    );
+  }
 }
 
 /**
@@ -57,6 +64,7 @@ function vih_short_course_sport_form_field_ui_field_edit_form_alter(&$form, &$fo
  */
 function vih_short_course_sport_form_commerce_cart_add_to_cart_form_alter(&$form, &$form_state) {
   // Initialize empty arrays we'll use later.
+  $attached_additional_products_field = NULL;
   $attached_additional_products = array();
   $attached_additional_attributes = array();
 
@@ -65,13 +73,43 @@ function vih_short_course_sport_form_commerce_cart_add_to_cart_form_alter(&$form
   $entity_id = $form_state['context']['entity_id'];
 
   // Create entity wrapper of the product display
-  $product_display_entities = entity_load($entity_type, array($entity_id));
-  $product_display_wrapper = entity_metadata_wrapper($entity_type, reset($product_display_entities));
+  $product_display_entity = entity_load($entity_type, array($entity_id));
+  $product_display_entity = reset($product_display_entity);
+  $product_display_wrapper = entity_metadata_wrapper($entity_type, $product_display_entity);
+
+  // Discover if there is a secondary product reference field that provides
+  // additional products.
+  foreach ($product_display_wrapper->getPropertyInfo() as $property => $property_data) {
+    if (isset($property_data['type']) && $property_data['type'] == 'commerce_product') {
+      $field_instance = field_info_instance($entity_type, $property, $product_display_entity->type);
+      $field_instance_settings = $field_instance['settings'];
+      if (isset($field_instance_settings['additional_products_provider'])
+          && $field_instance_settings['additional_products_provider']) {
+        $attached_additional_products_field = $property;
+      }
+    }
+  }
+
+  // Back out if we don't have a field
+  if (!$attached_additional_products_field) {
+    return;
+  }
 
   // Check if the product display is utilizing additional products.
-  if ($product_display_wrapper->__isset(COMMERCE_CART_ADDITIONAL_PRODUCTS_FIELD)) {
+  if ($product_display_wrapper->__isset($attached_additional_products_field)) {
     // Make sure we have values before moving forward
-    $additional_products = $product_display_wrapper->{COMMERCE_CART_ADDITIONAL_PRODUCTS_FIELD}->value();
+    $additional_products = $product_display_wrapper->$attached_additional_products_field->value();
+
+    if (!$additional_products) {
+      // We have field but no values
+      return;
+    }
+
+    // To accomodate single value and multi value, wrap single value fields in an array
+    if (is_object($additional_products)) {
+      $additional_products = array($additional_products);
+    }
+
     if ($additional_products) {
 
       // We only need to attach the product ID and titles for the form
