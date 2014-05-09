@@ -4,8 +4,6 @@
  * Code for the VIH Short Course Sport feature.
  */
 
-// @todo: Map "extra choices"
-
 include_once 'vih_short_course_sport.features.inc';
 
 /**
@@ -55,6 +53,15 @@ function vih_short_course_sport_form_field_ui_field_edit_form_alter(&$form, &$fo
       '#weight' => -8,
     );
   }
+  // If the current field instance is not locked, provides multiple textfield values
+  if (empty($form['locked']) && $form['#field']['type'] == 'text' && $form['#field']['cardinality'] != 1) {
+    $form['instance']['settings']['additional_products_options'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use this field to provide extra options via key|value'),
+      '#default_value' => isset($instance['settings']['additional_products_options']) ? $instance['settings']['additional_products_options'] : FALSE,
+      '#weight' => -1,
+    );
+  }
 }
 
 /**
@@ -90,97 +97,92 @@ function vih_short_course_sport_form_commerce_cart_add_to_cart_form_alter(&$form
     }
   }
 
-  // Back out if we don't have a field
-  if (!$attached_additional_products_field) {
-    return;
-  }
+  // Back out if we have a product field, add items.
+  if ($attached_additional_products_field) {
+    // Check if the product display is utilizing additional products.
+    if ($product_display_wrapper->__isset($attached_additional_products_field)) {
+      // Make sure we have values before moving forward
+      $additional_products = $product_display_wrapper->$attached_additional_products_field->value();
 
-  // Check if the product display is utilizing additional products.
-  if ($product_display_wrapper->__isset($attached_additional_products_field)) {
-    // Make sure we have values before moving forward
-    $additional_products = $product_display_wrapper->$attached_additional_products_field->value();
+      if (!$additional_products) {
+        // We have field but no values
+        return;
+      }
 
-    if (!$additional_products) {
-      // We have field but no values
-      return;
-    }
+      // To accomodate single value and multi value, wrap single value fields in an array
+      if (is_object($additional_products)) {
+        $additional_products = array($additional_products);
+      }
 
-    // To accomodate single value and multi value, wrap single value fields in an array
-    if (is_object($additional_products)) {
-      $additional_products = array($additional_products);
-    }
+      if ($additional_products) {
 
-    if ($additional_products) {
+        // We only need to attach the product ID and titles for the form
+        foreach ($additional_products as $key => $commerce_product) {
 
-      // We only need to attach the product ID and titles for the form
-      foreach ($additional_products as $key => $commerce_product) {
+          // Get price for title.
+          $commerce_product_price = commerce_product_calculate_sell_price($commerce_product);
+          $price = ' (' . commerce_currency_format($commerce_product_price['amount'], $commerce_product_price['currency_code']) . ')';
 
-        // Get price for title.
-        $commerce_product_price = commerce_product_calculate_sell_price($commerce_product);
-        $price = ' (' . commerce_currency_format($commerce_product_price['amount'], $commerce_product_price['currency_code']) . ')';
+          // Allows us to create a radio list of options based by product ID
+          $attached_additional_products[$commerce_product->product_id] = $commerce_product->title . $price;
 
-        // Allows us to create a radio list of options based by product ID
-        $attached_additional_products[$commerce_product->product_id] = $commerce_product->title . $price;
+          // Add the products atributes fields for later.
+          // @note: the field instance is saved in the form's line_item_fields,
+          //        do we technically need to reload field instance?
+          foreach (element_children($form['line_item_fields']) as $field_name) {
 
-        // Add the products atributes fields for later.
-        // @note: the field instance is saved in the form's line_item_fields,
-        //        do we technically need to reload field instance?
-        foreach (element_children($form['line_item_fields']) as $field_name) {
+            // Check if the field had the proper setting enabled for it to be added.
+            $allowed = vih_short_course_sport_field_access($form['line_item_fields'][$field_name]);
+            if ($allowed) {
 
-          // Check if the field had the proper setting enabled for it to be added.
-          $allowed = vih_short_course_sport_field_access($form['line_item_fields'][$field_name]);
-          if ($allowed) {
-
-            // Add the field to the array of fields to be parsed
-            $attached_additional_attributes[$commerce_product->product_id][$field_name] = $form['line_item_fields'][$field_name];
+              // Add the field to the array of fields to be parsed
+              $attached_additional_attributes[$commerce_product->product_id][$field_name] = $form['line_item_fields'][$field_name];
+            }
           }
         }
       }
     }
-  }
-
-  // If we didn't end up with additional products to attach, lets leave now.
-  if (!$attached_additional_products) {
-    return;
-  }
-
-  // Create the options array for secondary products.
-  $options = array(
-    '_none' => 'None',
-  );
-  $options += $attached_additional_products;
-
-  // Start building form
-  $form['additional_products'] = array(
-    '#type' => 'container',
-    '#weight' => 50,
-  );
-  $form['additional_products']['additional_products_option'] = array(
-    '#type' => 'radios',
-    '#title' => t('Additional products'),
-    '#options' => $options,
-    '#default_value' => '_none',
-    '#weight'=> 30,
-  );
-  // Inject the product attributes.
-  foreach ($attached_additional_products as $product_id => $display_title) {
-    if (isset($attached_additional_attributes[$product_id])) {
-
-      // We make a container for each product's field options
-      // @note: This is unneeded since all products share line item type
-      //        but end goal is to support different attributes per product.
-      $form['additional_products'][$product_id] = array(
-        '#type' => 'container',
-        '#weight' => 40,
-        '#states' => array(
-          'visible' => array(
-            ':input[name=additional_products_option]' => array('value' => $product_id),
-          ),
-        ),
+    // If we end up with additional products to attach, do it now.
+    if ($attached_additional_products) {
+      // Create the options array for secondary products.
+      $options = array(
+        '_none' => 'None',
       );
-      // Add each field to the container
-      foreach ($attached_additional_attributes[$product_id] as $field_name => $element) {
-        $form['additional_products'][$product_id][$field_name] = $element[LANGUAGE_NONE];
+      $options += $attached_additional_products;
+
+      // Start building form
+      $form['additional_products'] = array(
+        '#type' => 'container',
+        '#weight' => 50,
+      );
+      $form['additional_products']['additional_products_option'] = array(
+        '#type' => 'radios',
+        '#title' => t('Additional products'),
+        '#options' => $options,
+        '#default_value' => '_none',
+        '#weight'=> 30,
+      );
+      // Inject the product attributes.
+      foreach ($attached_additional_products as $product_id => $display_title) {
+        if (isset($attached_additional_attributes[$product_id])) {
+
+          // We make a container for each product's field options
+          // @note: This is unneeded since all products share line item type
+          //        but end goal is to support different attributes per product.
+          $form['additional_products'][$product_id] = array(
+            '#type' => 'container',
+            '#weight' => 40,
+            '#states' => array(
+              'visible' => array(
+                ':input[name=additional_products_option]' => array('value' => $product_id),
+              ),
+            ),
+          );
+          // Add each field to the container
+          foreach ($attached_additional_attributes[$product_id] as $field_name => $element) {
+            $form['additional_products'][$product_id][$field_name] = $element[LANGUAGE_NONE];
+          }
+        }
       }
     }
   }
@@ -196,7 +198,8 @@ function vih_short_course_sport_form_commerce_cart_add_to_cart_form_alter(&$form
  */
 function vih_short_course_sport_add_to_cart_form_submit($form, &$form_state) {
   // Check if additional products were added
-  if (isset($form_state['values']['additional_products_option']) && is_numeric($form_state['values']['additional_products_option'])) {
+  if (isset($form_state['values']['additional_products_option'])
+      && is_numeric($form_state['values']['additional_products_option'])) {
     // Create new line item and add it to the cart.
     if ($product = commerce_product_load((int) $form_state['values']['additional_products_option'])) {
       // Create some details about the line itme
