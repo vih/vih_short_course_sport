@@ -133,7 +133,8 @@ function vih_short_course_sport_add_to_cart_form_submit($form, &$form_state) {
       // @note: this assumes only one additional product can be added. (radio form element)
       $attribute_fields = element_children($form['additional_products'][$product->product_id]);
       foreach ($attribute_fields as $key => $field_name) {
-        $line_item->data['additional_products'][$field_name] = $form_state['values'][$field_name][0]['value'];
+        $attribute_field_label = $form['additional_products'][$product->product_id][$field_name]['#title'];
+        $line_item->data['additional_products'][$attribute_field_label] = $form_state['values'][$field_name][0]['value'];
       }
 
       $line_item = commerce_line_item_load($line_item->line_item_id);
