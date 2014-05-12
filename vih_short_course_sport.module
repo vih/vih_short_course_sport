@@ -96,7 +96,7 @@ function vih_short_course_sport_form_commerce_cart_add_to_cart_form_alter(&$form
 
   // If the additional products field is set, attached them to form.
   if ($attached_additional_products_field) {
-    _vih_short_course_sport_attach_additional_products_form($form, $product_display_wrapper, $attached_additional_products_field);
+    _vih_short_course_sport_attach_additional_products_form($form, $form_state, $product_display_wrapper, $attached_additional_products_field);
   }
 
 
@@ -106,8 +106,7 @@ function vih_short_course_sport_form_commerce_cart_add_to_cart_form_alter(&$form
 
 /**
  * Submit handler
- * @todo : Provide proper translation on product options
- * @todo : comment code
+ * @todo : Provide proper translation on product options (verify if needed)
  * @todo : clean this up.
  */
 function vih_short_course_sport_add_to_cart_form_submit($form, &$form_state) {
@@ -186,7 +185,7 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, $product_disp
   }
 }
 
-function _vih_short_course_sport_attach_additional_products_form(&$form, $product_display_wrapper, $attached_additional_products_field) {
+function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_state, $product_display_wrapper, $attached_additional_products_field) {
   // Make sure we have values before moving forward
   $additional_products = $product_display_wrapper->$attached_additional_products_field->value();
 
@@ -203,11 +202,28 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, $produc
   if ($additional_products) {
     // We only need to attach the product ID and titles for the form
     foreach ($additional_products as $key => $commerce_product) {
+
       // Allows us to create a radio list of options based by product ID
       $attached_additional_products[$commerce_product->product_id] = _vih_short_course_sport_additional_product_display_title($commerce_product);
 
       // Add the products atributes fields for later.
-      // @note: this is referencing custom line items. Just load the product type's fields.
+      $commerce_product_wrapper = entity_metadata_wrapper('commerce_product', $commerce_product);
+
+      // Create a fake array to attach commerce_product form to.
+      $pseudo_form = array();
+      field_attach_form('commerce_product', $commerce_product, $pseudo_form, $form_state);
+
+      // We'll go through each form element and check to see if it should be
+      // embedded in our form. This duplicates how the regular Add to Cart field
+      // widget pulls line_item_fields into scope.
+      foreach (element_children($pseudo_form) as $key => $field_name) {
+        $field_instance = field_info_instance('commerce_product', $field_name, $commerce_product_wrapper->value()->type);
+        if (isset($field_instance['commerce_cart_settings']) && $field_instance['commerce_cart_settings']['attribute_field']) {
+          // Pull the field into our stashed array to be processed later.
+          $attached_additional_attributes[$commerce_product->product_id][$field_name] = $pseudo_form[$field_name];
+        }
+      }
+
       foreach (element_children($form['line_item_fields']) as $field_name) {
         // Check if the field had the proper setting enabled for it to be added.
         $allowed = vih_short_course_sport_field_access($form['line_item_fields'][$field_name]);
@@ -243,8 +259,7 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, $produc
         if (isset($attached_additional_attributes[$product_id])) {
 
           // We make a container for each product's field options
-          // @note: This is unneeded since all products share line item type
-          //        but end goal is to support different attributes per product.
+          // This way product types can have different attributes
           $form['additional_products'][$product_id] = array(
             '#type' => 'container',
             '#weight' => 40,
@@ -271,7 +286,7 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, $produc
 function _vih_short_course_sport_additional_products_field($node_wrapper) {
   // Discover if there is a secondary product reference field that provides
   // additional products.
-  return _vih_short_course_sport_get_field_instance_details($node_wrapper, 'commerce_product', 'additional_products_provider');
+  return _vih_short_course_sport_get_field_instance_details('node', $node_wrapper, 'commerce_product', 'additional_products_provider');
 }
 
 /**
@@ -282,7 +297,7 @@ function _vih_short_course_sport_additional_products_field($node_wrapper) {
 function _vih_short_course_sport_extra_options_field($node_wrapper) {
   // Discover if there is a secondary product reference field that provides
   // additional products.
-  return _vih_short_course_sport_get_field_instance_details($node_wrapper, 'list<text>', 'additional_products_options');
+  return _vih_short_course_sport_get_field_instance_details('node', $node_wrapper, 'list<text>', 'additional_products_options');
 }
 
 /**
@@ -291,6 +306,7 @@ function _vih_short_course_sport_extra_options_field($node_wrapper) {
 function _vih_short_course_sport_additional_product_display_title($commerce_product) {
   $commerce_product_price = commerce_product_calculate_sell_price($commerce_product);
   $price = ' (' . commerce_currency_format($commerce_product_price['amount'], $commerce_product_price['currency_code']) . ')';
+  // Return formatted string
   return  $commerce_product->title . $price;
 }
 
@@ -300,14 +316,15 @@ function _vih_short_course_sport_additional_product_display_title($commerce_prod
  * @param  string $instance_setting
  * @return string
  */
-function _vih_short_course_sport_get_field_instance_details($product_display_wrapper, $field_type, $instance_setting) {
+function _vih_short_course_sport_get_field_instance_details($entity_type, $product_display_wrapper, $field_type, $instance_setting) {
   // Discover if there is a field that has provided setting
   foreach ($product_display_wrapper->getPropertyInfo() as $property => $property_data) {
+    // Check if we're dealing with a field, ensure it matches our type.
     if (isset($property_data['type']) && $property_data['type'] == $field_type) {
-      // @note: Outside we properly deterermine the entity type.
-      // @todo: Pass the entity type, or something. Or determine unneeded and redundant.
-      $field_instance = field_info_instance('node', $property, $product_display_wrapper->value()->type);
+      // Load the field instance so we can check custom settings
+      $field_instance = field_info_instance($entity_type, $property, $product_display_wrapper->value()->type);
       $field_instance_settings = $field_instance['settings'];
+      // If our setting is set and enabled, return property (field) name.
       if (isset($field_instance_settings[$instance_setting])
           && $field_instance_settings[$instance_setting]) {
         return $property;
