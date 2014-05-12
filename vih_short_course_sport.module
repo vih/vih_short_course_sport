@@ -148,7 +148,7 @@ function vih_short_course_sport_add_to_cart_form_submit($form, &$form_state) {
  * Helper function to check if line item field should be attached as a additional
  * product attribute.
  */
-function vih_short_course_sport_sport_field_access($field) {
+function vih_short_course_sport_field_access($field) {
   if (isset($field['#commerce_cart_settings']) && isset($field['#commerce_cart_settings']['additional_products_field_access'])) {
     if ($field['#commerce_cart_settings']['additional_products_field_access']) {
       return TRUE;
@@ -161,16 +161,29 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, $product_disp
   // Make sure we have values before moving forward
   // @note: do we need to check individual values since field cardinality != 1?
   $extra_options = $product_display_wrapper->$attached_extra_options_field->value();
-
+  $option_choices = array(
+    'yes' => t('Yes'),
+    'no' => t('No'),
+  );
   if (!$extra_options) {
     // We have field but no values
     return;
   }
 
+  // Start building form
+  $form['extra_options'] = array(
+    '#type' => 'container',
+    '#weight' => 20,
+  );
   foreach ($extra_options as $key => $extra_option) {
-    dpm($extra_option);
+    $identifier = drupal_clean_css_identifier($extra_option);
+    $form['extra_options'][$identifier] = array(
+      '#type' => 'radios',
+      '#title' => $extra_option,
+      '#options' => $option_choices,
+      '#weight'=> 30,
+    );
   }
-
 }
 
 function _vih_short_course_sport_attach_additional_products_form(&$form, $product_display_wrapper, $attached_additional_products_field) {
@@ -258,7 +271,7 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, $produc
 function _vih_short_course_sport_additional_products_field($node_wrapper) {
   // Discover if there is a secondary product reference field that provides
   // additional products.
-  return _vih_short_course_sport_get_field_instance_details($node_wrapper, 'additional_products_provider');
+  return _vih_short_course_sport_get_field_instance_details($node_wrapper, 'commerce_product', 'additional_products_provider');
 }
 
 /**
@@ -269,7 +282,7 @@ function _vih_short_course_sport_additional_products_field($node_wrapper) {
 function _vih_short_course_sport_extra_options_field($node_wrapper) {
   // Discover if there is a secondary product reference field that provides
   // additional products.
-  return _vih_short_course_sport_get_field_instance_details($node_wrapper, 'additional_products_options');
+  return _vih_short_course_sport_get_field_instance_details($node_wrapper, 'list<text>', 'additional_products_options');
 }
 
 /**
@@ -287,11 +300,13 @@ function _vih_short_course_sport_additional_product_display_title($commerce_prod
  * @param  string $instance_setting
  * @return string
  */
-function _vih_short_course_sport_get_field_instance_details($product_display_wrapper, $instance_setting) {
+function _vih_short_course_sport_get_field_instance_details($product_display_wrapper, $field_type, $instance_setting) {
   // Discover if there is a field that has provided setting
   foreach ($product_display_wrapper->getPropertyInfo() as $property => $property_data) {
-    if (isset($property_data['type']) && $property_data['type'] == 'commerce_product') {
-      $field_instance = field_info_instance($entity_type, $property, $product_display_entity->type);
+    if (isset($property_data['type']) && $property_data['type'] == $field_type) {
+      // @note: Outside we properly deterermine the entity type.
+      // @todo: Pass the entity type, or something. Or determine unneeded and redundant.
+      $field_instance = field_info_instance('node', $property, $product_display_wrapper->value()->type);
       $field_instance_settings = $field_instance['settings'];
       if (isset($field_instance_settings[$instance_setting])
           && $field_instance_settings[$instance_setting]) {
