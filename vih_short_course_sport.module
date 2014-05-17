@@ -23,6 +23,16 @@ function vih_short_course_sport_migrate_api() {
 }
 
 /**
+ * Implements hook_views_api().
+ */
+function vih_short_course_sport_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'vih_short_course_sport') . '/includes/views',
+  );
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  *
  * Add our "Additional Product Data" field option to Commerce Cart's form settings.
@@ -138,6 +148,7 @@ function vih_short_course_sport_add_to_cart_form_submit($form, &$form_state) {
       }
 
       $line_item = commerce_line_item_load($line_item->line_item_id);
+
       // Add line item to cart, use uid saved in form state.
       $line_item = commerce_cart_product_add($form_state['values']['uid'], $line_item, FALSE);
     }
