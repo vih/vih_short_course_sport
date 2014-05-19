@@ -1,0 +1,14 @@
+<?php
+/**
+ * @file
+ */
+
+/**
+ * Delete field_short_course_subjects
+ */
+function vih_short_course_sport_update_7000() {
+  $inst = field_info_instance('node', 'field_short_course_subjects', 'vih_short_course_sport_camp');
+  if ($inst) {
+    field_delete_instance($inst, false);
+  }
+}
