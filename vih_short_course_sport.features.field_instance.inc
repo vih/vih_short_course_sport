@@ -450,48 +450,6 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_sportcamp_subjects'
-  $field_instances['commerce_line_item-vih_short_course_sport-field_sportcamp_subjects'] = array(
-    'bundle' => 'vih_short_course_sport',
-    'commerce_cart_settings' => array(
-      'field_access' => 1,
-    ),
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => 0,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 4,
-      ),
-      'ical' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'commerce_line_item',
-    'field_name' => 'field_sportcamp_subjects',
-    'label' => 'Subjects',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_buttons',
-      'weight' => 10,
-    ),
-  );
-
   // Exported field_instance: 'commerce_product-vih_short_course_sportcamp-commerce_price'
   $field_instances['commerce_product-vih_short_course_sportcamp-commerce_price'] = array(
     'bundle' => 'vih_short_course_sportcamp',

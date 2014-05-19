@@ -20,7 +20,7 @@ class VIHShortCourseSportProduct extends VIHMigration {
           'not null' => TRUE,
         ),
       ),
-      MigrateDestinationEntityAPI::getKeySchema('commerce_product', 'vih_short_course_sport')
+      MigrateDetinationEntityAPI::getKeySchema('commerce_product', 'vih_short_course_sport')
     );
 
     // Create a MigrateSource object.
