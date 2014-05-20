@@ -14,7 +14,7 @@ function vih_short_course_sport_migrate_api() {
     'api' => 2,
     'migrations' => array(
       'VIHShortCourseSportProduct' => array('class_name' => 'VIHShortCourseSportProduct'),
-      //'VIHShortCourseSportExtraProduct' => array('class_name' => 'VIHShortCourseSportExtraProduct'),
+      'VIHShortCourseSportExtraProduct' => array('class_name' => 'VIHShortCourseSportExtraProduct'),
       'VIHShortCourseSportNode' => array('class_name' => 'VIHShortCourseSportNode'),
     ),
   );

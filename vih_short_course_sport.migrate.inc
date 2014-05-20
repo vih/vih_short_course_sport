@@ -20,13 +20,13 @@ class VIHShortCourseSportProduct extends VIHMigration {
           'not null' => TRUE,
         ),
       ),
-      MigrateDestinationEntityAPI::getKeySchema('commerce_product', 'vih_short_course_sport')
+      MigrateDestinationEntityAPI::getKeySchema('commerce_product', 'vih_short_course_sportcamp')
     );
 
     // Create a MigrateSource object.
     $this->source = new MigrateSourceCSV(drupal_get_path('module', 'vih_short_course_sport') . '/import/short_course_sport_products.csv', $this->csvcolumns(), array('header_rows' => 1));
 
-    $this->destination = new MigrateDestinationEntityAPI('commerce_product', 'vih_short_course_sport');
+    $this->destination = new MigrateDestinationEntityAPI('commerce_product', 'vih_short_course_sportcamp');
 
     $this->addFieldMapping('title', 'title');
     $this->addFieldMapping('sku', 'sku');
@@ -60,7 +60,6 @@ class VIHShortCourseSportProduct extends VIHMigration {
  * @file
  *  Migrations for vih_short_course_commerce.
  */
-/*
 class VIHShortCourseSportExtraProduct extends VIHMigration {
 
   public function __construct() {
@@ -80,7 +79,7 @@ class VIHShortCourseSportExtraProduct extends VIHMigration {
     );
 
     // Create a MigrateSource object.
-    $this->source = new MigrateSourceCSV(drupal_get_path('module', 'vih_short_course_kayak') . '/import/short_course_kayak_extra_products.csv', $this->csvcolumns(), array('header_rows' => 1));
+    $this->source = new MigrateSourceCSV(drupal_get_path('module', 'vih_short_course_sport') . '/import/short_course_sport_extra_products.csv', $this->csvcolumns(), array('header_rows' => 1));
 
     $this->destination = new MigrateDestinationEntityAPI('commerce_product', 'vih_kayak');
 
@@ -98,7 +97,6 @@ class VIHShortCourseSportExtraProduct extends VIHMigration {
     $columns[2] = array('price', 'Price');
     $columns[3] = array('stock_status', 'Stock status');
     $columns[4] = array('stock_quantity', 'Stock quantity');
-    $columns[5] = array('room', 'Room');
 
     return $columns;
   }
@@ -109,14 +107,13 @@ class VIHShortCourseSportExtraProduct extends VIHMigration {
     $row->language = LANGUAGE_NONE;
   }
 }
-*/
 
 class VIHShortCourseSportNode extends VIHMigration {
 
   public function __construct() {
     parent::__construct();
     $this->description = t('Import course nodes.');
-    $this->dependencies = array('VIHShortCourseSportProduct');
+    $this->dependencies = array('VIHShortCourseSportProduct', 'VIHShortCourseSportExtraProduct');
 
     // Create a map object for tracking the relationships between source rows
     $this->map = new MigrateSQLMap($this->machineName,
@@ -171,7 +168,7 @@ class VIHShortCourseSportNode extends VIHMigration {
     // Connect the products
     $this->addFieldMapping('field_golf_product', 'skus');
 
-    $this->addFieldMapping('field_rent_kayak', 'extra_product');
+    $this->addFieldMapping('field_product', 'extra_product');
 
     $this->addFieldMapping('field_kayak_extra_choices', 'options');
   }
@@ -190,15 +187,14 @@ class VIHShortCourseSportNode extends VIHMigration {
       $products[] = $product->product_id;
     }
     $row->skus = $products;
-    /*
+
     $products = array();
     foreach(explode(', ', $row->extra_product) as $sku) {
       $product = commerce_product_load_by_sku($sku);
       $products[] = $product->product_id;
     }
     $row->extra_product = $products;
-    $row->options = explode(',', $row->options);
-    */
+    //$row->options = explode(',', $row->options);
   }
 
   function csvcolumns() {
