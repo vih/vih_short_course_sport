@@ -1002,8 +1002,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_picture'
-  $field_instances['node-vih_short_course_sport_camp-field_picture'] = array(
+  // Exported field_instance: 'node-vih_short_course_sport_camp-field_featured_image'
+  $field_instances['node-vih_short_course_sport_camp-field_featured_image'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'deleted' => 0,
     'description' => '',
@@ -1013,7 +1013,7 @@ function vih_short_course_sport_field_default_field_instances() {
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => 'sidepicture',
+          'image_style' => 'panopoly_image_spotlight',
         ),
         'type' => 'image',
         'weight' => 1,
@@ -1038,8 +1038,8 @@ function vih_short_course_sport_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_picture',
-    'label' => 'Billede',
+    'field_name' => 'field_featured_image',
+    'label' => 'Featured image',
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
