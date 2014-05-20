@@ -159,9 +159,9 @@ class VIHShortCourseSportNode extends VIHMigration {
 
     // Featured image
     $this->addFieldMapping('field_featured_image', 'featured_image');
-    $this->addFieldMapping('field_picture:file_replace')
+    $this->addFieldMapping('field_featured_image:file_replace')
       ->defaultValue(FILE_EXISTS_REPLACE);
-    $this->addFieldMapping('field_picture:source_dir')
+    $this->addFieldMapping('field_featured_image:source_dir')
       ->defaultValue(drupal_get_path('module', 'vih_short_course_sport') . '/import/images');
 
     // Connect the products
