@@ -171,35 +171,40 @@ function _vih_short_course_sport_field_has_access($field) {
 function _vih_short_course_sport_attach_extra_options_form(&$form, $product_display_wrapper, $attached_extra_options_field) {
   // Make sure we have values before moving forward
   // @note: do we need to check individual values since field cardinality != 1?
-  $extra_options = $product_display_wrapper->$attached_extra_options_field->value();
-  $option_choices = array(
-    'yes' => t('Yes'),
-    'no' => t('No'),
-  );
-  if (!$extra_options) {
+  $field_options = $product_display_wrapper->$attached_extra_options_field->value();
+
+  // Label
+  $field = $product_display_wrapper->getPropertyInfo();
+  $field_label = $field[$attached_extra_options_field]['label'];
+
+  if (!$field_options) {
     // We have field but no values
     return;
   }
 
-  // Start building form
-  $form['extra_options'] = array(
-    '#type' => 'container',
-    '#weight' => 20,
+  $extra_options = array(
+    '_none' => t('None'),
   );
-  foreach ($extra_options as $key => $extra_option) {
-    $identifier = drupal_clean_css_identifier($extra_option);
-    $form['extra_options'][$identifier] = array(
-      '#type' => 'radios',
-      '#title' => $extra_option,
-      '#options' => $option_choices,
-      '#weight'=> 30,
-    );
+  foreach ($field_options as $key => $value) {
+    $extra_options[$value] = $value;
   }
+
+  // We manipulate the correlating line item field here to have our unique
+  // extra options per node.
+  //
+  // @note: This field must be the same on Line Item & Node.
+  $attached_extra_options_field = 'field_kayak_extra_choice';
+  $form['line_item_fields'][$attached_extra_options_field]['#access'] = TRUE;
+  $form['line_item_fields'][$attached_extra_options_field][LANGUAGE_NONE]['#title'] = $field_label;
+  $form['line_item_fields'][$attached_extra_options_field][LANGUAGE_NONE]['#options'] = $extra_options;
 }
 
 function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_state, $product_display_wrapper, $attached_additional_products_field) {
   // Make sure we have values before moving forward
   $additional_products = $product_display_wrapper->$attached_additional_products_field->value();
+  // Grab field label
+  $additional_products_label = $product_display_wrapper->getPropertyInfo();
+  $additional_products_label = $additional_products_label[$attached_additional_products_field]['label'];
 
   if (!$additional_products) {
     // We have field but no values
@@ -261,7 +266,7 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_
       );
       $form['additional_products']['additional_products_option'] = array(
         '#type' => 'radios',
-        '#title' => t('Additional products'),
+        '#title' => $additional_products_label,
         '#options' => $options,
         '#default_value' => '_none',
         '#weight'=> 30,
