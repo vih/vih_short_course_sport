@@ -194,7 +194,7 @@ class VIHShortCourseSportNode extends VIHMigration {
       $products[] = $product->product_id;
     }
     $row->extra_product = $products;
-    //$row->options = explode(',', $row->options);
+    $row->options = explode(',', $row->options);
   }
 
   function csvcolumns() {
