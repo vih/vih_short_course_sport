@@ -46,6 +46,22 @@ features[field_instance][] = commerce_line_item-vih_short_course_sport-field_roo
 features[field_instance][] = commerce_product-vih_short_course_sportcamp-commerce_price
 features[field_instance][] = commerce_product-vih_short_course_sportcamp-commerce_stock
 features[field_instance][] = commerce_product-vih_short_course_sportcamp-field_room
+features[field_instance][] = node-vih_short_course_sport_camp-body
+features[field_instance][] = node-vih_short_course_sport_camp-field_course_leader
+features[field_instance][] = node-vih_short_course_sport_camp-field_course_time
+features[field_instance][] = node-vih_short_course_sport_camp-field_course_type
+features[field_instance][] = node-vih_short_course_sport_camp-field_golf_product
+features[field_instance][] = node-vih_short_course_sport_camp-field_picture
+features[field_instance][] = node-vih_short_course_sport_camp-field_short_course_lecture
+features[field_instance][] = node-vih_short_course_sport_camp-field_vih_schedule
+features[variable][] = field_bundle_settings_node__vih_short_course_sport_camp
+features[variable][] = language_content_type_vih_short_course_sport_camp
+features[variable][] = menu_options_vih_short_course_sport_camp
+features[variable][] = menu_parent_vih_short_course_sport_camp
+features[variable][] = node_options_vih_short_course_sport_camp
+features[variable][] = node_preview_vih_short_course_sport_camp
+features[variable][] = node_submitted_vih_short_course_sport_camp
+
 features[node][] = vih_short_course_sport_camp
 
 files[] = vih_short_course_sport.migrate.inc

@@ -716,7 +716,6 @@ function vih_short_course_sport_field_default_field_instances() {
   t('Price');
   t('Product');
   t('Sambo');
-  t('Subjects');
   t('Total');
   t('Unit price');
   t('Værelser');
