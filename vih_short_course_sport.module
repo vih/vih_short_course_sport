@@ -68,7 +68,7 @@ function vih_short_course_sport_form_field_ui_field_edit_form_alter(&$form, &$fo
   if (empty($form['locked']) && $form['#field']['type'] == 'text' && $form['#field']['cardinality'] != 1) {
     $form['instance']['settings']['additional_products_options'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Use this field to provide extra options. Customer will answer with yes or no.'),
+      '#title' => t('Use this field to provide extra options. Customer will be able to select each item as an option.'),
       '#default_value' => isset($instance['settings']['additional_products_options']) ? $instance['settings']['additional_products_options'] : FALSE,
       '#weight' => -1,
     );
