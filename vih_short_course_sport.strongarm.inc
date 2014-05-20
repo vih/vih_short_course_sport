@@ -43,6 +43,9 @@ function vih_short_course_sport_strongarm() {
       'diff_standard' => array(
         'custom_settings' => FALSE,
       ),
+      'featured' => array(
+        'custom_settings' => TRUE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -58,23 +61,26 @@ function vih_short_course_sport_strongarm() {
         'redirect' => array(
           'weight' => '12',
         ),
+        'xmlsitemap' => array(
+          'weight' => '13',
+        ),
       ),
       'display' => array(
         'product:sku' => array(
-          'default' => array(
-            'weight' => '12',
-            'visible' => FALSE,
-          ),
-        ),
-        'product:title' => array(
           'default' => array(
             'weight' => '13',
             'visible' => FALSE,
           ),
         ),
+        'product:title' => array(
+          'default' => array(
+            'weight' => '14',
+            'visible' => FALSE,
+          ),
+        ),
         'product:commerce_price' => array(
           'default' => array(
-            'weight' => '8',
+            'weight' => '9',
             'visible' => FALSE,
           ),
         ),
@@ -86,7 +92,7 @@ function vih_short_course_sport_strongarm() {
         ),
         'product:field_room' => array(
           'default' => array(
-            'weight' => '11',
+            'weight' => '12',
             'visible' => FALSE,
           ),
         ),
@@ -98,13 +104,13 @@ function vih_short_course_sport_strongarm() {
         ),
         'product:status' => array(
           'default' => array(
-            'weight' => '9',
+            'weight' => '10',
             'visible' => FALSE,
           ),
         ),
         'product:commerce_stock' => array(
           'default' => array(
-            'weight' => '7',
+            'weight' => '8',
             'visible' => FALSE,
           ),
         ),

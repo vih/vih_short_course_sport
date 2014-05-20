@@ -4,8 +4,6 @@ core = 7.x
 package = VIH
 version = 7.x-0.1
 project = vih_short_course_sport
-; Views Handlers
-files[] = includes/views/handlers/vih_short_course_sport_additional_product_options.inc
 dependencies[] = commerce_cart
 dependencies[] = commerce_custom_product
 dependencies[] = commerce_features
@@ -21,6 +19,7 @@ dependencies[] = options
 dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = vih_commerce
+dependencies[] = vih_lectures
 dependencies[] = vih_short_course_commerce
 features[commerce_line_item_type][] = vih_short_course_sport
 features[commerce_product_type][] = vih_short_course_sportcamp
@@ -52,8 +51,10 @@ features[field_instance][] = node-vih_short_course_sport_camp-field_course_time
 features[field_instance][] = node-vih_short_course_sport_camp-field_course_type
 features[field_instance][] = node-vih_short_course_sport_camp-field_golf_product
 features[field_instance][] = node-vih_short_course_sport_camp-field_picture
+features[field_instance][] = node-vih_short_course_sport_camp-field_product
 features[field_instance][] = node-vih_short_course_sport_camp-field_short_course_lecture
 features[field_instance][] = node-vih_short_course_sport_camp-field_vih_schedule
+features[node][] = vih_short_course_sport_camp
 features[variable][] = field_bundle_settings_node__vih_short_course_sport_camp
 features[variable][] = language_content_type_vih_short_course_sport_camp
 features[variable][] = menu_options_vih_short_course_sport_camp
@@ -61,7 +62,5 @@ features[variable][] = menu_parent_vih_short_course_sport_camp
 features[variable][] = node_options_vih_short_course_sport_camp
 features[variable][] = node_preview_vih_short_course_sport_camp
 features[variable][] = node_submitted_vih_short_course_sport_camp
-
-features[node][] = vih_short_course_sport_camp
-
+files[] = includes/views/handlers/vih_short_course_sport_additional_product_options.inc
 files[] = vih_short_course_sport.migrate.inc
