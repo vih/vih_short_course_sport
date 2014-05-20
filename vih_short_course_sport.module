@@ -182,9 +182,6 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, $product_disp
     return;
   }
 
-  $extra_options = array(
-    '_none' => t('None'),
-  );
   foreach ($field_options as $key => $value) {
     $extra_options[$value] = $value;
   }
