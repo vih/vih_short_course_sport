@@ -49,7 +49,6 @@ class VIHShortCourseSportProduct extends VIHMigration {
   }
 
   function prepareRow($row) {
-    //$row->product_images = explode(', ', $row->images);
     $row->uid = 1;
     $row->language = LANGUAGE_NONE;
   }
