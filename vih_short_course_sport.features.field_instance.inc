@@ -342,6 +342,41 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_kayak_extra_choice'
+  $field_instances['commerce_line_item-vih_short_course_sport-field_kayak_extra_choice'] = array(
+    'bundle' => 'vih_short_course_sport',
+    'commerce_cart_settings' => array(
+      'additional_products_field_access' => 0,
+      'field_access' => 1,
+    ),
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 8,
+      ),
+    ),
+    'entity_type' => 'commerce_line_item',
+    'field_name' => 'field_kayak_extra_choice',
+    'label' => 'Extra choices',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 11,
+    ),
+  );
+
   // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_registrant_name'
   $field_instances['commerce_line_item-vih_short_course_sport-field_registrant_name'] = array(
     'bundle' => 'vih_short_course_sport',
@@ -898,7 +933,7 @@ function vih_short_course_sport_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 11,
+        'weight' => 12,
       ),
       'featured' => array(
         'label' => 'above',
@@ -932,73 +967,6 @@ function vih_short_course_sport_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_buttons',
       'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_golf_product'
-  $field_instances['node-vih_short_course_sport_camp-field_golf_product'] = array(
-    'bundle' => 'vih_short_course_sport_camp',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'commerce_cart',
-        'settings' => array(
-          'combine' => 0,
-          'default_quantity' => 1,
-          'line_item_type' => 'vih_short_course_sport',
-          'show_quantity' => 0,
-          'show_single_product_attributes' => FALSE,
-        ),
-        'type' => 'commerce_cart_add_to_cart_form',
-        'weight' => 6,
-      ),
-      'featured' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'ical' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_golf_product',
-    'label' => 'Produkt',
-    'required' => 0,
-    'settings' => array(
-      'field_injection' => 1,
-      'referenceable_types' => array(
-        'product' => 0,
-        'vih_short_course' => 0,
-        'vih_short_course_sportcamp' => 'vih_short_course_sportcamp',
-        'vih_shourt_course_golf' => 0,
-      ),
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'inline_entity_form',
-      'settings' => array(
-        'fields' => array(),
-        'type_settings' => array(
-          'autogenerate_title' => 1,
-          'use_variation_language' => 0,
-        ),
-      ),
-      'type' => 'inline_entity_form',
-      'weight' => 8,
     ),
   );
 
@@ -1096,6 +1064,129 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-vih_short_course_sport_camp-field_golf_product'
+  $field_instances['node-vih_short_course_sport_camp-field_golf_product'] = array(
+    'bundle' => 'vih_short_course_sport_camp',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'commerce_cart',
+        'settings' => array(
+          'combine' => 0,
+          'default_quantity' => 1,
+          'line_item_type' => 'vih_short_course_sport',
+          'show_quantity' => 0,
+          'show_single_product_attributes' => FALSE,
+        ),
+        'type' => 'commerce_cart_add_to_cart_form',
+        'weight' => 6,
+      ),
+      'featured' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'ical' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_golf_product',
+    'label' => 'Produkt',
+    'required' => 0,
+    'settings' => array(
+      'field_injection' => 1,
+      'referenceable_types' => array(
+        'product' => 0,
+        'vih_short_course' => 0,
+        'vih_short_course_sportcamp' => 'vih_short_course_sportcamp',
+        'vih_shourt_course_golf' => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'inline_entity_form',
+      'settings' => array(
+        'fields' => array(),
+        'type_settings' => array(
+          'autogenerate_title' => 1,
+          'use_variation_language' => 0,
+        ),
+      ),
+      'type' => 'inline_entity_form',
+      'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'node-vih_short_course_sport_camp-field_kayak_extra_choices'
+  $field_instances['node-vih_short_course_sport_camp-field_kayak_extra_choices'] = array(
+    'bundle' => 'vih_short_course_sport_camp',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 7,
+      ),
+      'featured' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'ical' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_kayak_extra_choices',
+    'label' => 'Extra choices',
+    'required' => 0,
+    'settings' => array(
+      'additional_products_options' => 1,
+      'linkit' => array(
+        'enable' => 0,
+        'insert_plugin' => '',
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 17,
+    ),
+  );
+
   // Exported field_instance: 'node-vih_short_course_sport_camp-field_product'
   $field_instances['node-vih_short_course_sport_camp-field_product'] = array(
     'bundle' => 'vih_short_course_sport_camp',
@@ -1106,7 +1197,7 @@ function vih_short_course_sport_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 7,
+        'weight' => 8,
       ),
       'featured' => array(
         'label' => 'above',
@@ -1282,12 +1373,13 @@ function vih_short_course_sport_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Billede');
   t('Body');
   t('CPR-nummer');
   t('Da kurset er støttet af staten, skal du opgive alle ti cifre i dit CPR-nummer.');
   t('Display path');
   t('Equipment');
+  t('Extra choices');
+  t('Featured image');
   t('Foredrag');
   t('Kursusleder');
   t('Kursustype');

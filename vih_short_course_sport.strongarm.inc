@@ -68,19 +68,19 @@ function vih_short_course_sport_strongarm() {
       'display' => array(
         'product:sku' => array(
           'default' => array(
-            'weight' => '13',
+            'weight' => '14',
             'visible' => FALSE,
           ),
         ),
         'product:title' => array(
           'default' => array(
-            'weight' => '14',
+            'weight' => '15',
             'visible' => FALSE,
           ),
         ),
         'product:commerce_price' => array(
           'default' => array(
-            'weight' => '9',
+            'weight' => '10',
             'visible' => FALSE,
           ),
         ),
@@ -92,7 +92,7 @@ function vih_short_course_sport_strongarm() {
         ),
         'product:field_room' => array(
           'default' => array(
-            'weight' => '12',
+            'weight' => '13',
             'visible' => FALSE,
           ),
         ),
@@ -104,13 +104,13 @@ function vih_short_course_sport_strongarm() {
         ),
         'product:status' => array(
           'default' => array(
-            'weight' => '10',
+            'weight' => '11',
             'visible' => FALSE,
           ),
         ),
         'product:commerce_stock' => array(
           'default' => array(
-            'weight' => '8',
+            'weight' => '9',
             'visible' => FALSE,
           ),
         ),
