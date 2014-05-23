@@ -149,6 +149,11 @@ function vih_short_course_sport_add_to_cart_form_submit($form, &$form_state) {
         }
       }
 
+      // Manually attach the registrant information so this item can be easily
+      // associated with the main product (by human eye.)
+      $field_registrant_name_instance = field_info_instance('commerce_line_item', 'field_registrant_name', $line_item_type);
+      $line_item->data['additional_products']['Navn'] = check_plain($form_state['values']['line_item_fields']['field_registrant_name'][LANGUAGE_NONE][0]['value']);
+
       $line_item = commerce_line_item_load($line_item->line_item_id);
 
       // Add line item to cart, use uid saved in form state.
@@ -186,6 +191,13 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, $product_disp
 
   foreach ($field_options as $key => $value) {
     $extra_options[$value] = $value;
+  }
+
+  // @note: There is a field `field_kayak_extra_choices` and `field_kayak_extra_choice`
+  //        _choices is a node field, whereas `_choice is the line item field.
+  //        To save on any kind of migration, we're going to provide a logic fix.
+  if ($attached_extra_options_field == 'field_kayak_extra_choices') {
+    $attached_extra_options_field = 'field_kayak_extra_choice';
   }
 
   // We manipulate the correlating line item field here to have our unique
@@ -238,7 +250,6 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_
           $attached_additional_attributes[$commerce_product->product_id][$field_name] = $pseudo_form[$field_name];
         }
       }
-
       foreach (element_children($form['line_item_fields']) as $field_name) {
         // Check if the field had the proper setting enabled for it to be added.
         $allowed = _vih_short_course_sport_field_has_access($form['line_item_fields'][$field_name]);
