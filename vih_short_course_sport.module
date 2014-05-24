@@ -141,8 +141,8 @@ function vih_short_course_sport_add_to_cart_form_submit($form, &$form_state) {
 
       // Add additional products info into data store.
       // @note: this assumes only one additional product can be added. (radio form element)
-      $attribute_fields = element_children($form['additional_products'][$product->product_id]);
-      if (is_array($attribute_fields)) {
+      if (isset($form['additional_products'][$product->product_id])) {
+        $attribute_fields = element_children($form['additional_products'][$product->product_id]);
         foreach ($attribute_fields as $key => $field_name) {
           $attribute_field_label = $form['additional_products'][$product->product_id][$field_name]['#title'];
           $line_item->data['additional_products'][$attribute_field_label] = $form_state['values'][$field_name][0]['value'];
