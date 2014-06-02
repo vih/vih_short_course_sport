@@ -933,7 +933,7 @@ function vih_short_course_sport_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 15,
       ),
       'featured' => array(
         'label' => 'above',
@@ -1143,7 +1143,7 @@ function vih_short_course_sport_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 7,
+        'weight' => 13,
       ),
       'featured' => array(
         'label' => 'above',
@@ -1198,7 +1198,7 @@ function vih_short_course_sport_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 8,
+        'weight' => 14,
       ),
       'featured' => array(
         'label' => 'above',

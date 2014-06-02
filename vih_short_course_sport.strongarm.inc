@@ -19,7 +19,7 @@ function vih_short_course_sport_strongarm() {
       'teaser' => array(
         'custom_settings' => TRUE,
       ),
-      'ical' => array(
+      'featured' => array(
         'custom_settings' => TRUE,
       ),
       'full' => array(
@@ -34,83 +34,49 @@ function vih_short_course_sport_strongarm() {
       'search_result' => array(
         'custom_settings' => FALSE,
       ),
+      'ical' => array(
+        'custom_settings' => FALSE,
+      ),
       'token' => array(
         'custom_settings' => FALSE,
       ),
-      'media_gallery_block' => array(
-        'custom_settings' => FALSE,
-      ),
-      'diff_standard' => array(
-        'custom_settings' => FALSE,
-      ),
-      'featured' => array(
-        'custom_settings' => TRUE,
-      ),
     ),
     'extra_fields' => array(
-      'form' => array(
-        'metatags' => array(
-          'weight' => '10',
-        ),
-        'title' => array(
-          'weight' => '0',
-        ),
-        'path' => array(
-          'weight' => '11',
-        ),
-        'redirect' => array(
-          'weight' => '12',
-        ),
-        'xmlsitemap' => array(
-          'weight' => '13',
-        ),
-      ),
+      'form' => array(),
       'display' => array(
         'product:sku' => array(
-          'default' => array(
-            'weight' => '14',
-            'visible' => FALSE,
-          ),
-        ),
-        'product:title' => array(
-          'default' => array(
-            'weight' => '15',
-            'visible' => FALSE,
-          ),
-        ),
-        'product:commerce_price' => array(
           'default' => array(
             'weight' => '10',
             'visible' => FALSE,
           ),
         ),
-        'product:field_entity_registration' => array(
-          'default' => array(
-            'weight' => '9',
-            'visible' => FALSE,
-          ),
-        ),
-        'product:field_room' => array(
-          'default' => array(
-            'weight' => '13',
-            'visible' => FALSE,
-          ),
-        ),
-        'product:field_agegroup' => array(
-          'default' => array(
-            'weight' => '8',
-            'visible' => FALSE,
-          ),
-        ),
-        'product:status' => array(
+        'product:title' => array(
           'default' => array(
             'weight' => '11',
             'visible' => FALSE,
           ),
         ),
-        'product:commerce_stock' => array(
+        'product:status' => array(
+          'default' => array(
+            'weight' => '12',
+            'visible' => FALSE,
+          ),
+        ),
+        'product:commerce_price' => array(
           'default' => array(
             'weight' => '9',
+            'visible' => FALSE,
+          ),
+        ),
+        'product:commerce_stock' => array(
+          'default' => array(
+            'weight' => '8',
+            'visible' => FALSE,
+          ),
+        ),
+        'product:field_room' => array(
+          'default' => array(
+            'weight' => '7',
             'visible' => FALSE,
           ),
         ),
