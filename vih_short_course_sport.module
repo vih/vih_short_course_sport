@@ -185,7 +185,8 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, $product_disp
   $field_label = $field[$attached_extra_options_field]['label'];
 
   if (!$field_options) {
-    // We have field but no values
+    // We have field but no values, so hide field and exit.
+    $form['line_item_fields'][$attached_extra_options_field]['#access'] = FALSE;
     return;
   }
 
@@ -204,9 +205,11 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, $product_disp
   // extra options per node.
   //
   // @note: This field must be the same on Line Item & Node.
-  $form['line_item_fields'][$attached_extra_options_field]['#access'] = TRUE;
-  $form['line_item_fields'][$attached_extra_options_field][LANGUAGE_NONE]['#title'] = $field_label;
-  $form['line_item_fields'][$attached_extra_options_field][LANGUAGE_NONE]['#options'] = $extra_options;
+  if (!empty($extra_options)) {
+    $form['line_item_fields'][$attached_extra_options_field]['#access'] = TRUE;
+    $form['line_item_fields'][$attached_extra_options_field][LANGUAGE_NONE]['#title'] = $field_label;
+    $form['line_item_fields'][$attached_extra_options_field][LANGUAGE_NONE]['#options'] = $extra_options;
+  }
 }
 
 function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_state, $product_display_wrapper, $attached_additional_products_field) {
