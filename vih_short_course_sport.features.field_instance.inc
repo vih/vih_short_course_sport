@@ -381,7 +381,7 @@ function vih_short_course_sport_field_default_field_instances() {
   $field_instances['commerce_line_item-vih_short_course_sport-field_kayak_extra_choices'] = array(
     'bundle' => 'vih_short_course_sport',
     'commerce_cart_settings' => array(
-      'field_access' => 1,
+      'field_access' => 0,
     ),
     'default_value' => NULL,
     'deleted' => 0,
