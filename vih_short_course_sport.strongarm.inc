@@ -42,7 +42,23 @@ function vih_short_course_sport_strongarm() {
       ),
     ),
     'extra_fields' => array(
-      'form' => array(),
+      'form' => array(
+        'metatags' => array(
+          'weight' => '12',
+        ),
+        'title' => array(
+          'weight' => '0',
+        ),
+        'path' => array(
+          'weight' => '15',
+        ),
+        'redirect' => array(
+          'weight' => '13',
+        ),
+        'xmlsitemap' => array(
+          'weight' => '14',
+        ),
+      ),
       'display' => array(
         'product:sku' => array(
           'default' => array(

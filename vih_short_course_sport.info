@@ -62,6 +62,7 @@ features[field_instance][] = node-vih_short_course_sport_camp-field_course_type
 features[field_instance][] = node-vih_short_course_sport_camp-field_featured_image
 features[field_instance][] = node-vih_short_course_sport_camp-field_golf_product
 features[field_instance][] = node-vih_short_course_sport_camp-field_kayak_extra_choices
+features[field_instance][] = node-vih_short_course_sport_camp-field_pictures
 features[field_instance][] = node-vih_short_course_sport_camp-field_product
 features[field_instance][] = node-vih_short_course_sport_camp-field_short_course_lecture
 features[field_instance][] = node-vih_short_course_sport_camp-field_vih_schedule
