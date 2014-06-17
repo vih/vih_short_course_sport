@@ -178,18 +178,51 @@ function vih_short_course_sport_default_page_manager_handlers() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-e0dc3419-998a-409e-870e-53a6f2c65424';
+    $pane->pid = 'new-702b9021-9780-4463-9dea-83e0cb511916';
     $pane->panel = 'middle';
     $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_picture';
+    $pane->subtype = 'node:field_featured_image';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'label' => 'hidden',
       'formatter' => 'image',
+      'delta_limit' => 0,
+      'delta_offset' => '0',
+      'delta_reversed' => FALSE,
       'formatter_settings' => array(
-        'image_style' => 'sidepicture',
+        'image_style' => 'panopoly_image_spotlight',
         'image_link' => '',
+      ),
+      'context' => array(),
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array();
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $pane->uuid = '702b9021-9780-4463-9dea-83e0cb511916';
+    $display->content['new-702b9021-9780-4463-9dea-83e0cb511916'] = $pane;
+    $display->panels['middle'][0] = 'new-702b9021-9780-4463-9dea-83e0cb511916';
+    $pane = new stdClass();
+    $pane->pid = 'new-a5203cd6-bcd6-4515-8eee-a0c9bbca6ee7';
+    $pane->panel = 'middle';
+    $pane->type = 'entity_field';
+    $pane->subtype = 'node:field_course_time';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'label' => 'inline',
+      'formatter' => 'date_default',
+      'formatter_settings' => array(
+        'format_type' => 'long',
+        'multiple_number' => '',
+        'multiple_from' => '',
+        'multiple_to' => '',
+        'fromto' => 'both',
       ),
       'context' => 'argument_entity_id:node_1',
       'override_title' => 0,
@@ -201,11 +234,11 @@ function vih_short_course_sport_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = '';
-    $pane->uuid = 'e0dc3419-998a-409e-870e-53a6f2c65424';
-    $display->content['new-e0dc3419-998a-409e-870e-53a6f2c65424'] = $pane;
-    $display->panels['middle'][0] = 'new-e0dc3419-998a-409e-870e-53a6f2c65424';
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'a5203cd6-bcd6-4515-8eee-a0c9bbca6ee7';
+    $display->content['new-a5203cd6-bcd6-4515-8eee-a0c9bbca6ee7'] = $pane;
+    $display->panels['middle'][1] = 'new-a5203cd6-bcd6-4515-8eee-a0c9bbca6ee7';
     $pane = new stdClass();
     $pane->pid = 'new-a5e49880-9d53-4c7b-a0e8-ec21a654ecbc';
     $pane->panel = 'middle';
@@ -227,30 +260,11 @@ function vih_short_course_sport_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = '';
     $pane->uuid = 'a5e49880-9d53-4c7b-a0e8-ec21a654ecbc';
     $display->content['new-a5e49880-9d53-4c7b-a0e8-ec21a654ecbc'] = $pane;
-    $display->panels['middle'][1] = 'new-a5e49880-9d53-4c7b-a0e8-ec21a654ecbc';
-    $pane = new stdClass();
-    $pane->pid = 'new-a696ee41-7f40-4c03-a0d8-2ed83e318dcd';
-    $pane->panel = 'middle';
-    $pane->type = 'views_panes';
-    $pane->subtype = 'vih_short_course_sportcamp_subjects-panel_pane_2';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array();
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $pane->uuid = 'a696ee41-7f40-4c03-a0d8-2ed83e318dcd';
-    $display->content['new-a696ee41-7f40-4c03-a0d8-2ed83e318dcd'] = $pane;
-    $display->panels['middle'][2] = 'new-a696ee41-7f40-4c03-a0d8-2ed83e318dcd';
+    $display->panels['middle'][2] = 'new-a5e49880-9d53-4c7b-a0e8-ec21a654ecbc';
     $pane = new stdClass();
     $pane->pid = 'new-fcac5e04-4853-451b-a030-7afca45d4d09';
     $pane->panel = 'middle';
@@ -344,38 +358,6 @@ function vih_short_course_sport_default_page_manager_handlers() {
     $display->content['new-285fc51a-ad59-4b35-ac03-452a49f1a75e'] = $pane;
     $display->panels['middle'][5] = 'new-285fc51a-ad59-4b35-ac03-452a49f1a75e';
     $pane = new stdClass();
-    $pane->pid = 'new-a5203cd6-bcd6-4515-8eee-a0c9bbca6ee7';
-    $pane->panel = 'middle';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_course_time';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'inline',
-      'formatter' => 'date_default',
-      'formatter_settings' => array(
-        'format_type' => 'long',
-        'multiple_number' => '',
-        'multiple_from' => '',
-        'multiple_to' => '',
-        'fromto' => 'both',
-      ),
-      'context' => 'argument_entity_id:node_1',
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 6;
-    $pane->locks = array();
-    $pane->uuid = 'a5203cd6-bcd6-4515-8eee-a0c9bbca6ee7';
-    $display->content['new-a5203cd6-bcd6-4515-8eee-a0c9bbca6ee7'] = $pane;
-    $display->panels['middle'][6] = 'new-a5203cd6-bcd6-4515-8eee-a0c9bbca6ee7';
-    $pane = new stdClass();
     $pane->pid = 'new-4c505046-05bb-481f-9348-9a464c90cdf3';
     $pane->panel = 'middle';
     $pane->type = 'entity_field';
@@ -401,15 +383,19 @@ function vih_short_course_sport_default_page_manager_handlers() {
     );
     $pane->cache = array();
     $pane->style = array(
-      'settings' => NULL,
+      'settings' => array(
+        'headline' => '',
+        'style' => 'alternate',
+      ),
+      'style' => 'vih_box_highlight',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 7;
+    $pane->position = 6;
     $pane->locks = array();
     $pane->uuid = '4c505046-05bb-481f-9348-9a464c90cdf3';
     $display->content['new-4c505046-05bb-481f-9348-9a464c90cdf3'] = $pane;
-    $display->panels['middle'][7] = 'new-4c505046-05bb-481f-9348-9a464c90cdf3';
+    $display->panels['middle'][6] = 'new-4c505046-05bb-481f-9348-9a464c90cdf3';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
