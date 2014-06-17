@@ -347,7 +347,7 @@ function vih_short_course_sport_field_default_field_instances() {
     'bundle' => 'vih_short_course_sport',
     'commerce_cart_settings' => array(
       'additional_products_field_access' => 0,
-      'field_access' => 1,
+      'field_access' => 0,
     ),
     'default_value' => NULL,
     'deleted' => 0,
@@ -374,6 +374,48 @@ function vih_short_course_sport_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_buttons',
       'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_kayak_extra_choices'
+  $field_instances['commerce_line_item-vih_short_course_sport-field_kayak_extra_choices'] = array(
+    'bundle' => 'vih_short_course_sport',
+    'commerce_cart_settings' => array(
+      'field_access' => 1,
+    ),
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 9,
+      ),
+    ),
+    'entity_type' => 'commerce_line_item',
+    'field_name' => 'field_kayak_extra_choices',
+    'label' => 'Extra choices',
+    'required' => 0,
+    'settings' => array(
+      'additional_products_options' => 0,
+      'linkit' => array(
+        'enable' => 0,
+        'insert_plugin' => '',
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 13,
     ),
   );
 

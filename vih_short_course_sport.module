@@ -41,19 +41,6 @@ function vih_short_course_sport_form_field_ui_field_edit_form_alter(&$form, &$fo
   // Extract the instance info from the form.
   $instance = $form['#instance'];
 
-  // If the current field instance is not locked and is attached to a product
-  // line item type...
-  // @todo: depcreated for product type fields vs actual line item fields
-  if (empty($form['locked']) && $instance['entity_type'] == 'commerce_line_item' &&
-    in_array($instance['bundle'], commerce_product_line_item_types())) {
-
-    // Add our extra option to the existing options.
-    $form['instance']['commerce_cart_settings']['additional_products_field_access'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Use this field as a modifier for Commerce Additional Products'),
-      '#default_value' => isset($instance['commerce_cart_settings']['additional_products_field_access']) ? $instance['commerce_cart_settings']['additional_products_field_access'] : FALSE,
-    );
-  }
   // If the current field instance is not locked and is attached to  product
   // display node...
   if (empty($form['locked']) && $form['#field']['type'] == 'commerce_product_reference') {
@@ -184,7 +171,7 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, $product_disp
   $field = $product_display_wrapper->getPropertyInfo();
   $field_label = $field[$attached_extra_options_field]['label'];
 
-  if (!$field_options) {
+  if (!$field_options || count($field_options) <= 1) {
     // We have field but no values, so hide field and exit.
     $form['line_item_fields'][$attached_extra_options_field]['#access'] = FALSE;
     // Turn off field_access so commerce_cart doesn't turn this back on.
