@@ -17,6 +17,10 @@ function vih_short_course_sport_commerce_line_item_default_types() {
       'base' => 'commerce_product_line_item',
     ),
   );
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Add product');
+
   return $items;
 }
 
