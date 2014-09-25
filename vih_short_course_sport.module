@@ -256,7 +256,7 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_
     if ($attached_additional_products) {
       // Create the options array for secondary products.
       $options = array(
-        '_none' => 'None',
+        '_none' => t('None'),
       );
       $options += $attached_additional_products;
 
@@ -325,7 +325,7 @@ function _vih_short_course_sport_additional_product_display_title($commerce_prod
   $commerce_product_price = commerce_product_calculate_sell_price($commerce_product);
   $price = ' (' . commerce_currency_format($commerce_product_price['amount'], $commerce_product_price['currency_code']) . ')';
   // Return formatted string
-  return  $commerce_product->title . $price;
+  return $commerce_product->title . $price;
 }
 
 /**
