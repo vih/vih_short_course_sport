@@ -39,7 +39,7 @@ function vih_short_course_sport_strongarm() {
   $strongarm->name = 'node_options_vih_short_course_sport_camp';
   $strongarm->value = array(
     0 => 'status',
-    1 => 'promote',
+    1 => 'revision',
   );
   $export['node_options_vih_short_course_sport_camp'] = $strongarm;
 
