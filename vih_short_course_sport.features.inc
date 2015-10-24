@@ -60,7 +60,7 @@ function vih_short_course_sport_node_info() {
     'vih_short_course_sport_camp' => array(
       'name' => t('Short Course Sport Camp'),
       'base' => 'node_content',
-      'description' => t('Used for <em>sport camps</em> where you need to choose your subjects when registering.'),
+      'description' => t('Use <em>sport camp</em> when you need to add additional options for the course, e.g. additional products.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
