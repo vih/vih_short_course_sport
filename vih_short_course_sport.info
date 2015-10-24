@@ -16,6 +16,7 @@ dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = file
 dependencies[] = image
+dependencies[] = i18n_field
 dependencies[] = inline_entity_form
 dependencies[] = list
 dependencies[] = media

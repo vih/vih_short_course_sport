@@ -192,7 +192,7 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, EntityDrupalW
   //
   // @note: This field must be the same on Line Item & Node.
   if (!empty($extra_options)) {
-    // Label
+    // Label.
     $instance = field_info_instance('node', $attached_extra_options_field, $product_display_wrapper->getBundle());
     $field_label = i18n_field_translate_property($instance, 'label');
     $form['line_item_fields'][$attached_extra_options_field]['#access'] = TRUE;
@@ -201,8 +201,11 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, EntityDrupalW
   }
 }
 
+/**
+ * Helper function for attaching additional product to form.
+ */
 function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_state, $product_display_wrapper, $attached_additional_products_field) {
-  // Make sure we have values before moving forward
+  // Make sure we have values before moving forward.
   $additional_products = $product_display_wrapper->$attached_additional_products_field->value();
 
   if (!$additional_products) {
@@ -210,16 +213,16 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_
     return;
   }
 
-  // To accomodate single value and multi value, wrap single value fields in an array
+  // To accomodate single value and multi value, wrap single value fields in an array.
   if (is_object($additional_products)) {
     $additional_products = array($additional_products);
   }
 
   if ($additional_products) {
-    // We only need to attach the product ID and titles for the form
+    // We only need to attach the product ID and titles for the form.
     foreach ($additional_products as $key => $commerce_product) {
 
-      // Allows us to create a radio list of options based by product ID
+      // Allows us to create a radio list of options based by product ID.
       $attached_additional_products[$commerce_product->product_id] = _vih_short_course_sport_additional_product_display_title($commerce_product);
 
       // Add the products atributes fields for later.
@@ -249,52 +252,52 @@ function _vih_short_course_sport_attach_additional_products_form(&$form, &$form_
       }
     }
   }
-    // If we end up with additional products to attach, do it now.
-    if ($attached_additional_products) {
-      // Grab field label
-      $instance = field_info_instance('node', $attached_additional_products_field, $product_display_wrapper->getBundle());
-      $additional_products_label = i18n_field_translate_property($instance, 'label');
+  // If we end up with additional products to attach, do it now.
+  if ($attached_additional_products) {
+    // Grab field label.
+    $instance = field_info_instance('node', $attached_additional_products_field, $product_display_wrapper->getBundle());
+    $additional_products_label = i18n_field_translate_property($instance, 'label');
 
-      // Create the options array for secondary products.
-      $options = array(
-        '_none' => t('None'),
-      );
-      $options += $attached_additional_products;
+    // Create the options array for secondary products.
+    $options = array(
+      '_none' => t('None'),
+    );
+    $options += $attached_additional_products;
 
-      // Start building form
-      $form['additional_products'] = array(
-        '#type' => 'container',
-        '#weight' => 50,
-      );
-      $form['additional_products']['additional_products_option'] = array(
-        '#type' => 'radios',
-        '#title' => $additional_products_label,
-        '#options' => $options,
-        '#default_value' => '_none',
-        '#weight'=> 30,
-      );
-      // Inject the product attributes.
-      foreach ($attached_additional_products as $product_id => $display_title) {
-        if (isset($attached_additional_attributes[$product_id])) {
+    // Start building form.
+    $form['additional_products'] = array(
+      '#type' => 'container',
+      '#weight' => 50,
+    );
+    $form['additional_products']['additional_products_option'] = array(
+      '#type' => 'radios',
+      '#title' => $additional_products_label,
+      '#options' => $options,
+      '#default_value' => '_none',
+      '#weight'=> 30,
+    );
+    // Inject the product attributes.
+    foreach ($attached_additional_products as $product_id => $display_title) {
+      if (isset($attached_additional_attributes[$product_id])) {
 
-          // We make a container for each product's field options
-          // This way product types can have different attributes
-          $form['additional_products'][$product_id] = array(
-            '#type' => 'container',
-            '#weight' => 40,
-            '#states' => array(
-              'visible' => array(
-                ':input[name=additional_products_option]' => array('value' => $product_id),
-              ),
+        // We make a container for each product's field options
+        // This way product types can have different attributes.
+        $form['additional_products'][$product_id] = array(
+          '#type' => 'container',
+          '#weight' => 40,
+          '#states' => array(
+            'visible' => array(
+              ':input[name=additional_products_option]' => array('value' => $product_id),
             ),
-          );
-          // Add each field to the container
-          foreach ($attached_additional_attributes[$product_id] as $field_name => $element) {
-            $form['additional_products'][$product_id][$field_name] = $element[LANGUAGE_NONE];
-          }
+          ),
+        );
+        // Add each field to the container.
+        foreach ($attached_additional_attributes[$product_id] as $field_name => $element) {
+          $form['additional_products'][$product_id][$field_name] = $element[LANGUAGE_NONE];
         }
       }
     }
+  }
 }
 
 /**
