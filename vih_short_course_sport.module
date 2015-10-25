@@ -163,6 +163,9 @@ function _vih_short_course_sport_field_has_access($field) {
   return FALSE;
 }
 
+/**
+ * Helper function to attach extra options to the form.
+ */
 function _vih_short_course_sport_attach_extra_options_form(&$form, EntityDrupalWrapper $product_display_wrapper, $attached_extra_options_field) {
   // Make sure we have values before moving forward
   // @note: do we need to check individual values since field cardinality != 1?
@@ -184,6 +187,7 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, EntityDrupalW
   //        _choices is a node field, whereas `_choice is the line item field.
   //        To save on any kind of migration, we're going to provide a logic fix.
   if ($attached_extra_options_field == 'field_kayak_extra_choices') {
+    $attached_extra_options_field_for_translation = $attached_extra_options_field;
     $attached_extra_options_field = 'field_kayak_extra_choice';
   }
 
@@ -193,7 +197,7 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, EntityDrupalW
   // @note: This field must be the same on Line Item & Node.
   if (!empty($extra_options)) {
     // Label.
-    $instance = field_info_instance('node', $attached_extra_options_field, $product_display_wrapper->getBundle());
+    $instance = field_info_instance('node', $attached_extra_options_field_for_translation, $product_display_wrapper->getBundle());
     $field_label = i18n_field_translate_property($instance, 'label');
     $form['line_item_fields'][$attached_extra_options_field]['#access'] = TRUE;
     $form['line_item_fields'][$attached_extra_options_field][LANGUAGE_NONE]['#title'] = $field_label;
