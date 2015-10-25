@@ -1,5 +1,5 @@
 name = VIH Short Course Sport
-description = Courses with product bundles and extra options.
+description = Handles short ccourses with product bundles and extra options.
 core = 7.x
 package = VIH
 version = 7.x-0.1
