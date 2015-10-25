@@ -186,8 +186,9 @@ function _vih_short_course_sport_attach_extra_options_form(&$form, EntityDrupalW
   // @note: There is a field `field_kayak_extra_choices` and `field_kayak_extra_choice`
   //        _choices is a node field, whereas `_choice is the line item field.
   //        To save on any kind of migration, we're going to provide a logic fix.
+  //        However, for translation we need _choices field for it to work correctly?
+  $attached_extra_options_field_for_translation = $attached_extra_options_field;
   if ($attached_extra_options_field == 'field_kayak_extra_choices') {
-    $attached_extra_options_field_for_translation = $attached_extra_options_field;
     $attached_extra_options_field = 'field_kayak_extra_choice';
   }
 
