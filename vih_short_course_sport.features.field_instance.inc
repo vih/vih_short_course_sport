@@ -10,7 +10,8 @@
 function vih_short_course_sport_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-commerce_display_path'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-commerce_display_path'
   $field_instances['commerce_line_item-vih_short_course_sport-commerce_display_path'] = array(
     'bundle' => 'vih_short_course_sport',
     'default_value' => NULL,
@@ -56,7 +57,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-commerce_product'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-commerce_product'
   $field_instances['commerce_line_item-vih_short_course_sport-commerce_product'] = array(
     'bundle' => 'vih_short_course_sport',
     'default_value' => NULL,
@@ -117,7 +119,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-commerce_total'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-commerce_total'
   $field_instances['commerce_line_item-vih_short_course_sport-commerce_total'] = array(
     'bundle' => 'vih_short_course_sport',
     'default_value' => NULL,
@@ -187,7 +190,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-commerce_unit_price'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-commerce_unit_price'
   $field_instances['commerce_line_item-vih_short_course_sport-commerce_unit_price'] = array(
     'bundle' => 'vih_short_course_sport',
     'default_value' => NULL,
@@ -257,7 +261,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_cpr_nummer'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-field_cpr_nummer'
   $field_instances['commerce_line_item-vih_short_course_sport-field_cpr_nummer'] = array(
     'bundle' => 'vih_short_course_sport',
     'commerce_cart_settings' => array(
@@ -342,7 +347,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_kayak_extra_choice'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-field_kayak_extra_choice'
   $field_instances['commerce_line_item-vih_short_course_sport-field_kayak_extra_choice'] = array(
     'bundle' => 'vih_short_course_sport',
     'commerce_cart_settings' => array(
@@ -377,7 +383,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_kayak_extra_choices'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-field_kayak_extra_choices'
   $field_instances['commerce_line_item-vih_short_course_sport-field_kayak_extra_choices'] = array(
     'bundle' => 'vih_short_course_sport',
     'commerce_cart_settings' => array(
@@ -419,7 +426,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_registrant_name'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-field_registrant_name'
   $field_instances['commerce_line_item-vih_short_course_sport-field_registrant_name'] = array(
     'bundle' => 'vih_short_course_sport',
     'commerce_cart_settings' => array(
@@ -484,7 +492,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_line_item-vih_short_course_sport-field_roommate'
+  // Exported field_instance:
+  // 'commerce_line_item-vih_short_course_sport-field_roommate'
   $field_instances['commerce_line_item-vih_short_course_sport-field_roommate'] = array(
     'bundle' => 'vih_short_course_sport',
     'commerce_cart_settings' => array(
@@ -527,7 +536,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_product-vih_short_course_sportcamp-commerce_price'
+  // Exported field_instance:
+  // 'commerce_product-vih_short_course_sportcamp-commerce_price'
   $field_instances['commerce_product-vih_short_course_sportcamp-commerce_price'] = array(
     'bundle' => 'vih_short_course_sportcamp',
     'default_value' => NULL,
@@ -663,7 +673,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_product-vih_short_course_sportcamp-commerce_stock'
+  // Exported field_instance:
+  // 'commerce_product-vih_short_course_sportcamp-commerce_stock'
   $field_instances['commerce_product-vih_short_course_sportcamp-commerce_stock'] = array(
     'bundle' => 'vih_short_course_sportcamp',
     'default_value' => array(
@@ -730,7 +741,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'commerce_product-vih_short_course_sportcamp-field_room'
+  // Exported field_instance:
+  // 'commerce_product-vih_short_course_sportcamp-field_room'
   $field_instances['commerce_product-vih_short_course_sportcamp-field_room'] = array(
     'bundle' => 'vih_short_course_sportcamp',
     'commerce_cart_settings' => array(
@@ -845,7 +857,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_course_leader'
+  // Exported field_instance:
+  // 'node-vih_short_course_sport_camp-field_course_leader'
   $field_instances['node-vih_short_course_sport_camp-field_course_leader'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'default_value' => NULL,
@@ -904,7 +917,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_course_time'
+  // Exported field_instance:
+  // 'node-vih_short_course_sport_camp-field_course_time'
   $field_instances['node-vih_short_course_sport_camp-field_course_time'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'default_value' => NULL,
@@ -920,6 +934,7 @@ function vih_short_course_sport_field_default_field_instances() {
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
+          'show_remaining_days' => FALSE,
         ),
         'type' => 'date_default',
         'weight' => 0,
@@ -945,6 +960,7 @@ function vih_short_course_sport_field_default_field_instances() {
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
+          'show_remaining_days' => FALSE,
         ),
         'type' => 'date_default',
         'weight' => 2,
@@ -977,7 +993,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_course_type'
+  // Exported field_instance:
+  // 'node-vih_short_course_sport_camp-field_course_type'
   $field_instances['node-vih_short_course_sport_camp-field_course_type'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'default_value' => NULL,
@@ -1025,7 +1042,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_featured_image'
+  // Exported field_instance:
+  // 'node-vih_short_course_sport_camp-field_featured_image'
   $field_instances['node-vih_short_course_sport_camp-field_featured_image'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'deleted' => 0,
@@ -1124,7 +1142,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_golf_product'
+  // Exported field_instance:
+  // 'node-vih_short_course_sport_camp-field_golf_product'
   $field_instances['node-vih_short_course_sport_camp-field_golf_product'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'deleted' => 0,
@@ -1191,7 +1210,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_kayak_extra_choices'
+  // Exported field_instance:
+  // 'node-vih_short_course_sport_camp-field_kayak_extra_choices'
   $field_instances['node-vih_short_course_sport_camp-field_kayak_extra_choices'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'default_value' => NULL,
@@ -1402,7 +1422,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_short_course_lecture'
+  // Exported field_instance:
+  // 'node-vih_short_course_sport_camp-field_short_course_lecture'
   $field_instances['node-vih_short_course_sport_camp-field_short_course_lecture'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'default_value' => NULL,
@@ -1462,7 +1483,8 @@ function vih_short_course_sport_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-vih_short_course_sport_camp-field_vih_schedule'
+  // Exported field_instance:
+  // 'node-vih_short_course_sport_camp-field_vih_schedule'
   $field_instances['node-vih_short_course_sport_camp-field_vih_schedule'] = array(
     'bundle' => 'vih_short_course_sport_camp',
     'deleted' => 0,
